@@ -37,23 +37,37 @@ export function LoginComponent() {
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
   const handleLogin = async () => {
+    if (!cpf || !phone) {
+      Alert.alert("Erro", "Por favor, preencha todos os campos.");
+      return;
+    }
+
+    const formattedCpf = cpf.trim();
+    const cleanPhone = phone.replace(/[()\s-]/g, "");
+
+    console.log("CPF:", formattedCpf, "Phone:", cleanPhone);
+
     try {
       const usersRef = collection(db, "users");
       const q = query(
         usersRef,
-        where("cpf", "==", cpf),
-        where("phone", "==", phone)
+        where("cpf", "==", formattedCpf),
+        where("phone", "==", cleanPhone)
       );
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
         Alert.alert("Login bem-sucedido!");
+        navigation.navigate("AppTabs"); // Altere para a tela correta
       } else {
-        Alert.alert("Usuário não encontrado. Verifique as credenciais.");
+        Alert.alert(
+          "Usuário não encontrado",
+          "Verifique se o CPF e o telefone estão corretos e tente novamente."
+        );
       }
     } catch (error) {
       console.error("Erro ao autenticar:", error);
-      Alert.alert("Erro ao autenticar. Tente novamente.");
+      Alert.alert("Erro ao autenticar", "Tente novamente.");
     }
   };
 

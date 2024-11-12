@@ -5,6 +5,6 @@ import { Indication } from '../../indication/indicate';
 
 export function Login() {
  return (
-   <Indication/>
+   <LoginComponent/>
   );
 }
