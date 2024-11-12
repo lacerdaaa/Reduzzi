@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react"
 import { View, Text, TextInput, TouchableOpacity, Keyboard, ImageBackground, Image, Alert } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import RNPickerSelect from "react-native-picker-select"
-
+import { db } from "../../../firebaseConfig"; 
+import { collection, addDoc } from "firebase/firestore"; 
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "@/src/navigation/AppNavigator.routes";
+import { NavigationProp } from "@react-navigation/native"; // Importe o tipo correto para tipar o useNavigation
 
 interface State {
   id: number;
@@ -27,6 +31,31 @@ export function RegisterComponent() {
   const [selectedState, setSelectedState] = useState<string>("")
   const [cities, setCities] = useState<City[]>([])
   const [selectedCity, setSelectedCity] = useState<string>("")
+  
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();  
+  
+  const handleRegister = async () => {
+    try {
+      const userData = {
+        name,
+        cpf,
+        phone,
+        email,
+        pixKey,
+        selectedState,
+        selectedCity,
+      };
+
+      const userCollection = collection(db, "users");
+      await addDoc(userCollection, userData);
+
+      Alert.alert("Sucesso", "Usuário registrado com sucesso!");
+      navigation.navigate("Login"); // Navega para a tela de login após registro bem-sucedido
+    } catch (error) {
+      console.error("Erro ao registrar usuário:", error);
+      Alert.alert("Erro", "Não foi possível registrar o usuário.");
+    }
+  };
 
   const fetchStates = async () => {
     try {
@@ -81,16 +110,6 @@ export function RegisterComponent() {
     }
   }, [selectedState]);
 
-  const handleRegister = () => {
-    console.log("Usuário criado:")
-    console.log(`Nome: ${name}`);
-    console.log(`CPF: ${cpf}`);
-    console.log(`Telefone: ${phone}`);
-    console.log(`Email: ${email}`);
-    console.log(`Chave PIX: ${pixKey}`);
-    console.log(`Estado: ${selectedState}`);
-    console.log(`Cidade: ${selectedCity}`);
-  };
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();

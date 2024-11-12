@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 
-export default function LoginScreen() {
-
+export function Home() {
  return (
    <View/>
   );

@@ -1,17 +1,65 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Keyboard, ImageBackground, Image } from "react-native";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Keyboard,
+  ImageBackground,
+  Image,
+  Alert,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { db } from "../../../firebaseConfig";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"; // Importação adicional
+
+// Tipos de navegação
+type RootStackParamList = {
+  Login: undefined;
+  Register: undefined;
+  AppTabs: undefined;
+};
+
+// Tipagem para a navegação no LoginComponent
+type LoginScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Login"
+>;
 
 export function LoginComponent() {
-  const [cpf, setCpf] = useState("");
-  const [phone, setPhone] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [cpf, setCpf] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  const handleLogin = () => {
-    console.log("Usuário:")
-    console.log(`CPF: ${cpf}`);
-    console.log(`Telefone: ${phone}`);
+  // Definindo o tipo da navegação
+  const navigation = useNavigation<LoginScreenNavigationProp>();
+
+  const handleLogin = async () => {
+    try {
+      const usersRef = collection(db, "users");
+      const q = query(
+        usersRef,
+        where("cpf", "==", cpf),
+        where("phone", "==", phone)
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        Alert.alert("Login bem-sucedido!");
+      } else {
+        Alert.alert("Usuário não encontrado. Verifique as credenciais.");
+      }
+    } catch (error) {
+      console.error("Erro ao autenticar:", error);
+      Alert.alert("Erro ao autenticar. Tente novamente.");
+    }
+  };
+
+  // Navegar para a tela de registro
+  const handleGoToRegister = () => {
+    navigation.navigate("Register"); // Navegação para a tela de registro
   };
 
   const dismissKeyboard = () => {
@@ -120,11 +168,8 @@ export function LoginComponent() {
               </View>
 
               <View className="flex-col items-center p-2">
-                
-
-
                 <View>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={handleGoToRegister}>
                     <Text className="text-slate-600 text-lx">
                       Não tem conta?
                       <Text className="text-blue-500 text-lx"> Criar uma</Text>
