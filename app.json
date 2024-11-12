@@ -31,6 +31,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "API_KEY":"AIzaSyCNVvS3JxzHcfok0x9Y4wLFRZdPiUnN630",
+      "AUTH_DOMAIN": "reduzzi-6eb49.firebaseapp.com",
+      "PROJECT_ID": "reduzzi-6eb49",
+      "STORAGE_BUCKET":"reduzzi-6eb49.firebasestorage.app",
+      "MESSAGING_SENDER_ID": "217112197945",
+      "APP_ID":"1:217112197945:web:0f77a453364359dd6ec6e8"
     }
   }
 }
