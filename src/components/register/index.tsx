@@ -5,8 +5,7 @@ import RNPickerSelect from "react-native-picker-select"
 import { db } from "../../../firebaseConfig"; 
 import { collection, addDoc } from "firebase/firestore"; 
 import { useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "@/src/navigation/AppNavigator.routes";
-import { NavigationProp } from "@react-navigation/native"; // Importe o tipo correto para tipar o useNavigation
+
 
 interface State {
   id: number;
@@ -19,7 +18,10 @@ interface City {
   nome: string;
 }
 
+
+
 export function RegisterComponent() {
+  const navigation = useNavigation()
 
   
   const [name, setName] = useState("")
@@ -31,8 +33,6 @@ export function RegisterComponent() {
   const [selectedState, setSelectedState] = useState<string>("")
   const [cities, setCities] = useState<City[]>([])
   const [selectedCity, setSelectedCity] = useState<string>("")
-  
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();  
   
   const handleRegister = async () => {
     try {
@@ -50,7 +50,8 @@ export function RegisterComponent() {
       await addDoc(userCollection, userData);
 
       Alert.alert("Sucesso", "Usuário registrado com sucesso!");
-      navigation.navigate("Login"); // Navega para a tela de login após registro bem-sucedido
+      navigation.navigate("Login")
+      //navigation
     } catch (error) {
       console.error("Erro ao registrar usuário:", error);
       Alert.alert("Erro", "Não foi possível registrar o usuário.");

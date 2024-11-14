@@ -1,8 +1,6 @@
 import { RegisterComponent } from '@/src/components/register';
 
 
-export function Register() {
- return (
-   <RegisterComponent/>
-  );
+export default function Register() {
+  return <RegisterComponent />;
 }

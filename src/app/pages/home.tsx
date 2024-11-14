@@ -1,7 +1,8 @@
+import { LoginComponent } from '@/src/components/login';
 import { View } from 'react-native';
 
-export function Home() {
+export default function Home() {
  return (
-   <View/>
+   <LoginComponent/>
   );
 }

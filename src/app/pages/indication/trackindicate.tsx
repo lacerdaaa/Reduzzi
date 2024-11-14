@@ -1,7 +1,5 @@
 import { View } from 'react-native';
 
-export function TrackIndication() {
- return (
-   <View/>
-  );
+export default function TrackIndication() {
+  return <View />;
 }

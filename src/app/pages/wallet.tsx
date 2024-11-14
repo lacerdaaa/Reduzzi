@@ -1,7 +1,11 @@
-import { View } from 'react-native';
+import { View, Text} from 'react-native';
 
-export function Wallet() {
+export default function Wallet() {
  return (
-   <View/>
+   <View>
+    <Text>
+      OI
+    </Text>
+   </View>
   );
 }

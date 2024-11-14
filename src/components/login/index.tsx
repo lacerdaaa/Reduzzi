@@ -13,28 +13,14 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { db } from "../../../firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"; // Importação adicional
 
-// Tipos de navegação
-type RootStackParamList = {
-  Login: undefined;
-  Register: undefined;
-  AppTabs: undefined;
-};
-
-// Tipagem para a navegação no LoginComponent
-type LoginScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Login"
->;
 
 export function LoginComponent() {
+  const navigation = useNavigation();
   const [cpf, setCpf] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  // Definindo o tipo da navegação
-  const navigation = useNavigation<LoginScreenNavigationProp>();
 
   const handleLogin = async () => {
     if (!cpf || !phone) {
@@ -58,7 +44,7 @@ export function LoginComponent() {
 
       if (!querySnapshot.empty) {
         Alert.alert("Login bem-sucedido!");
-        navigation.navigate("AppTabs"); // Altere para a tela correta
+       navigation.navigate('TabRoutes')
       } else {
         Alert.alert(
           "Usuário não encontrado",
@@ -71,10 +57,6 @@ export function LoginComponent() {
     }
   };
 
-  // Navegar para a tela de registro
-  const handleGoToRegister = () => {
-    navigation.navigate("Register"); // Navegação para a tela de registro
-  };
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
@@ -183,7 +165,7 @@ export function LoginComponent() {
 
               <View className="flex-col items-center p-2">
                 <View>
-                  <TouchableOpacity onPress={handleGoToRegister}>
+                  <TouchableOpacity >
                     <Text className="text-slate-600 text-lx">
                       Não tem conta?
                       <Text className="text-blue-500 text-lx"> Criar uma</Text>
