@@ -9,5 +9,6 @@ export default function Routes () {
                     <StackRoutes/>
                 </NavigationContainer>
         </NavigationIndependentTree>        
+        
     )
 }

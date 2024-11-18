@@ -222,7 +222,7 @@ const submitIndication = async () => {
 
 const styles = StyleSheet.create({
   background: {
-    height: "95%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },

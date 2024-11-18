@@ -1,8 +1,15 @@
+import { ButtonIndicate } from '@/src/components/home-button1';
 import { LoginComponent } from '@/src/components/login';
-import { View } from 'react-native';
+import { View, SafeAreaView, Text } from 'react-native';
+import { db, }
 
 export default function Home() {
  return (
-   <LoginComponent/>
-  );
+   <SafeAreaView>
+      <View className='w-full h-full items-center justify-center'>
+      <Text className='text-3xl font-bold'>Seja bem vindo, </Text>
+      <ButtonIndicate/>
+      </View>
+   </SafeAreaView>
+ );
 }

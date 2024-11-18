@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Keyboard,
-  ImageBackground,
-  Image,
-  Alert,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Keyboard, ImageBackground, Image, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { db } from "../../../firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -44,7 +35,7 @@ export function LoginComponent() {
 
       if (!querySnapshot.empty) {
         Alert.alert("Login bem-sucedido!");
-       navigation.navigate('TabRoutes')
+       navigation.navigate('Main')
       } else {
         Alert.alert(
           "Usuário não encontrado",
@@ -56,6 +47,10 @@ export function LoginComponent() {
       Alert.alert("Erro ao autenticar", "Tente novamente.");
     }
   };
+
+  const handleGoToRegister = () => {
+    navigation.navigate('Register')
+  }
 
 
   const dismissKeyboard = () => {
@@ -165,7 +160,7 @@ export function LoginComponent() {
 
               <View className="flex-col items-center p-2">
                 <View>
-                  <TouchableOpacity >
+                  <TouchableOpacity onPress={handleGoToRegister}>
                     <Text className="text-slate-600 text-lx">
                       Não tem conta?
                       <Text className="text-blue-500 text-lx"> Criar uma</Text>
