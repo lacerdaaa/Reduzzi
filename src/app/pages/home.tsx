@@ -1,7 +1,6 @@
 import { ButtonIndicate } from '@/src/components/home-button1';
 import { LoginComponent } from '@/src/components/login';
 import { View, SafeAreaView, Text } from 'react-native';
-import { db, }
 
 export default function Home() {
  return (

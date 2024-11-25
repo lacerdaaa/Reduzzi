@@ -35,7 +35,7 @@ export function LoginComponent() {
 
       if (!querySnapshot.empty) {
         Alert.alert("Login bem-sucedido!");
-       navigation.navigate('Main')
+       navigation.navigate('Main');
       } else {
         Alert.alert(
           "Usuário não encontrado",
@@ -45,7 +45,7 @@ export function LoginComponent() {
     } catch (error) {
       console.error("Erro ao autenticar:", error);
       Alert.alert("Erro ao autenticar", "Tente novamente.");
-    }
+    } 
   };
 
   const handleGoToRegister = () => {
@@ -59,7 +59,9 @@ export function LoginComponent() {
 
   return (
     <ImageBackground
-      source={require("../../assets/Reduzzi-app-background.jpeg")}
+      source={{
+        uri: "https://firebasestorage.googleapis.com/v0/b/reduzzi-6eb49.firebasestorage.app/o/src%2FReduzzi-app-background%20(1).jpeg?alt=media&token=261a341f-13c5-49f6-855a-16239e6dc56f",
+      }}
       style={{ flex: 1 }}
       resizeMode="cover"
     >
@@ -80,7 +82,6 @@ export function LoginComponent() {
                 resizeMode="contain"
               />
             </View>
-
             <View className="flex-1 justify-center items-center">
               <Text className="text-4xl font-bold mb-4">Bem vindo(a)</Text>
               <Text className="text-gray-500 mb-6">

@@ -78,35 +78,30 @@ const IndicationForm = () => {
     return urls;
   };
 
-const submitIndication = async () => {
-  // Verificar se pelo menos um telefone foi informado, imagens e localização
-  if ((!phoneManager && !phoneOwner) || images.length < 3 || !location) {
-    Alert.alert(
-      "Preencha todos os campos",
-      "Certifique-se de que pelo menos um telefone, a localização e as 3 fotos foram fornecidos."
-    );
-    return;
-  }
+  const submitIndication = async () => {
+    if ((!phoneManager && !phoneOwner) || images.length < 3 || !location) {
+      Alert.alert(
+        "Preencha todos os campos",
+        "Certifique-se de que pelo menos um telefone, a localização e as 3 fotos foram fornecidos."
+      );
+      return;
+    }
 
   try {
     console.log("Iniciando o upload das imagens...");
-    // Upload das imagens para o Firebase Storage
     const imageUrls = await uploadImages();
     console.log("Imagens enviadas com sucesso. URLs obtidas:", imageUrls);
 
-    // Verificar os dados antes de enviar ao Firestore
     console.log("Dados a serem enviados para o Firestore:", {
       location: {
         latitude: location.latitude,
-        longitude: location.longitude, // depuração
+        longitude: location.longitude, 
       },
       phoneManager: phoneManager,
       phoneOwner: phoneOwner,
       imageUrls: imageUrls,
       createdAt: new Date(),
     });
-
-    // Enviar os dados para o Firestore
     console.log("Enviando dados para o Firestore...");
     const docRef = await addDoc(collection(db, "indications"), { // adicionar coleção ao firestore collection
       location: {
@@ -136,15 +131,11 @@ const submitIndication = async () => {
   }
 };
 
-
-
-
-
-
-
   return (
     <ImageBackground
-      source={require("../../assets/indicate-background.png")}
+      source={{
+        uri: "https://firebasestorage.googleapis.com/v0/b/reduzzi-6eb49.firebasestorage.app/o/src%2Findicate-background.png?alt=media&token=1b6c63d4-58db-4904-8f0d-7aa856b981cd",
+      }}
       style={styles.background}
       resizeMode="cover"
     >
@@ -153,11 +144,10 @@ const submitIndication = async () => {
           Indique a Obra
         </Text>
 
-
         <Pressable className="bg-white w-full rounded-lg justify-center items-center">
           <Button title="Selecionar Localização" onPress={getLocation} />
           {location && (
-              <View className="items-center justify-center gap-2 p-3">
+            <View className="items-center justify-center gap-2 p-3">
               <Text className="font-bold text-slate-700">
                 Localização selecionada:
               </Text>
@@ -175,7 +165,7 @@ const submitIndication = async () => {
           <Button title="Selecionar Imagens" onPress={pickImage} />
           <View style={styles.imagesContainer}>
             {images.map((image, index) => (
-                <Image key={index} source={{ uri: image }} style={styles.image} />
+              <Image key={index} source={{ uri: image }} style={styles.image} />
             ))}
           </View>
         </Pressable>
@@ -200,17 +190,17 @@ const submitIndication = async () => {
         />
         <TouchableOpacity
           style={{
-              backgroundColor: "#3B82F6",
-              borderRadius: 8,
-              width: "100%",
-              padding: 16,
-              alignItems: "center",
-              marginTop: 5,
-              marginBottom: 10,
-            }}
+            backgroundColor: "#3B82F6",
+            borderRadius: 8,
+            width: "100%",
+            padding: 16,
+            alignItems: "center",
+            marginTop: 5,
+            marginBottom: 10,
+          }}
           onPress={submitIndication}
           disabled={
-              !(phoneOwner || phoneManager) || images.length === 0 || !location
+            !(phoneOwner || phoneManager) || images.length === 0 || !location
           }
         >
           <Text className="font-bold text-white">Enviar Indicação</Text>

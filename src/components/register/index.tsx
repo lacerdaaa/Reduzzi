@@ -116,9 +116,11 @@ export function RegisterComponent() {
     Keyboard.dismiss();
   };
 
+
+  
   return (
     <ImageBackground
-      source={require("../../assets/Reduzzi-app-background.jpeg")}
+      source={{ uri: "https://firebasestorage.googleapis.com/v0/b/reduzzi-6eb49.firebasestorage.app/o/src%2FReduzzi-app-background.jpeg?alt=media&token=f0450935-645b-4c70-a248-583b49bfedcb"}}
       style={{ flex: 1 }}
       resizeMode="cover"
       className="w-full"
