@@ -1,76 +1,101 @@
-import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-} from "react-native";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '@/firebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export function DashboardComponent() {
+const Dashboard = () => {
+  const [obrasAprovadas, setObrasAprovadas] = useState(0);
+  const [obrasEmAnalise, setObrasEmAnalise] = useState(0);
+  const [obrasNegadas, setObrasNegadas] = useState(0);
+
+  useEffect(() => {
+    const buscarObras = async () => {
+      const userId = await AsyncStorage.getItem('userId');
+      if (userId) {
+        try {
+          const obrasRef = collection(db, 'obras');
+          const q = query(obrasRef, where('usuarioId', '==', userId));
+          const querySnapshot = await getDocs(q);
+
+          let aprovadas = 0;
+          let emAnalise = 0;
+          let negadas = 0;
+
+          querySnapshot.forEach((doc) => {
+            const obra = doc.data();
+            switch (obra.status) {
+              case 'aprovada':
+                aprovadas++;
+                break;
+              case 'em análise':
+                emAnalise++;
+                break;
+              case 'negada':
+                negadas++;
+                break;
+            }
+          });
+
+          setObrasAprovadas(aprovadas);
+          setObrasEmAnalise(emAnalise);
+          setObrasNegadas(negadas);
+        } catch (error) {
+          console.error('Erro ao buscar obras:', error);
+        }
+      }
+    };
+
+    buscarObras();
+  }, []);
+
   return (
-      <View className="flex-1 justify-center items-center px-6">
-        <View className="rounded-2xl overflow-hidden border border-white h-3/5">
-          <View style={{ flex: 1, justifyContent: "center", padding: 16 }}>
-            <View style={{ alignItems: "center", marginTop: 20 }}>
-              <Image
-                source={require("../../assets/Reduzzi-logo-azul.png")}
-                style={{ width: 147, height: 44 }}
-                resizeMode="contain"
-              />
-            </View>
-
-            <View className="flex-1 justify-center items-center">
-              <Text className="text-4xl font-bold mb-4">Dashboard</Text>
-              <Text className="text-gray-500 mb-6">Bem vindo à sua conta</Text>
-
-              <View className="bg-white rounded-lg w-80 p-6 mb-4">
-                <Text className="text-2xl font-bold mb-4">Resumo:</Text>
-                <Text className="text-lg mb-2">Nome: Fulano de Tal</Text>
-                <Text className="text-lg mb-2">CPF: 123.456.789-00</Text>
-                <Text className="text-lg mb-2">Telefone: (11) 99999-9999</Text>
-              </View>
-
-              <View className="bg-white rounded-lg w-80 p-6 mb-4">
-                <Text className="text-2xl font-bold mb-4">
-                  Últimas Atividades:
-                </Text>
-                <Text className="text-lg mb-2">- Indicação: Obra 1</Text>
-                <Text className="text-lg mb-2">- Indicação: Obra 2</Text>
-              </View>
-
-              <View style={{ alignItems: "center", marginBottom: 16 }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: "#3b82f6",
-                    width: "100%",
-                    paddingVertical: 12,
-                    paddingHorizontal: 110,
-                    borderRadius: 8,
-                    alignItems: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "#fff",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Nova Indicação
-                  </Text>
-                </TouchableOpacity>
-              </View>
-
-              <View className="flex-col items-center p-2">
-                <TouchableOpacity>
-                  <Text className="text-blue-500 text-lx">Sair</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </View>
+    <View style={styles.container}>
+      <View style={[styles.box, styles.aprovadas]}>
+        <Text style={styles.numero}>{obrasAprovadas}</Text>
+        <Text style={styles.label}>Obras Aprovadas</Text>
       </View>
+      <View style={[styles.box, styles.analise]}>
+        <Text style={styles.numero}>{obrasEmAnalise}</Text>
+        <Text style={styles.label}>Obras em Análise</Text>
+      </View>
+      <View style={[styles.box, styles.negadas]}>
+        <Text style={styles.numero}>{obrasNegadas}</Text>
+        <Text style={styles.label}>Obras Negadas</Text>
+      </View>
+    </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 20,
+  },
+  box: {
+    alignItems: 'center',
+    padding: 20,
+    borderRadius: 10,
+    width: '30%',
+  },
+  aprovadas: {
+    backgroundColor: 'green',
+  },
+  analise: {
+    backgroundColor: 'yellow',
+  },
+  negadas: {
+    backgroundColor: 'red',
+  },
+  numero: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  label: {
+    fontSize: 16,
+  },
+});
+
+export default Dashboard;

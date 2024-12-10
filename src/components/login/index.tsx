@@ -35,7 +35,7 @@ export function LoginComponent() {
 
       if (!querySnapshot.empty) {
         Alert.alert("Login bem-sucedido!");
-       navigation.navigate('Main');
+       navigation.replace('Main');
       } else {
         Alert.alert(
           "Usuário não encontrado",
@@ -49,7 +49,7 @@ export function LoginComponent() {
   };
 
   const handleGoToRegister = () => {
-    navigation.navigate('Register')
+    navigation.replace('Register')
   }
 
 
