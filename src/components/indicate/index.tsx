@@ -1,28 +1,19 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  Image,
-  Alert,
-  ImageBackground,
-  TouchableOpacity,
-  Keyboard,
-  StyleSheet,
-  Pressable,
-} from "react-native";
-
+import { View, Text, TextInput, Button, Image, Alert, ImageBackground, TouchableOpacity, Keyboard, StyleSheet, Pressable } from "react-native";
 import { collection, addDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as Location from "expo-location";
 import * as ImagePicker from "expo-image-picker";
 import { db } from "../../../firebaseConfig"; 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// TODO: add a picker for state and city in this component
 
 const storage = getStorage();
 
 const IndicationForm = () => {
   const [phoneOwner, setPhoneOwner] = useState<string>("");
+  const [nameOwner, setNameOwner] = useState<string>("")
   const [phoneManager, setPhoneManager] = useState<string>("");
   const [images, setImages] = useState<string[]>([]);
   const [location, setLocation] =
@@ -42,40 +33,22 @@ const IndicationForm = () => {
   };
 
   const pickImage = async () => {
+    if (images.length >= 3) {
+      Alert.alert('Limite de fotos', 'Você já selecionou 3 fotos.');
+      return;
+    }
+  
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsMultipleSelection: true,
       quality: 1,
     });
+  
     if (!result.canceled && result.assets.length) {
-      const uris = result.assets.slice(0, 3).map((asset) => asset.uri); // max 3 img 
-      setImages(uris);
+      const novasImagens = result.assets.slice(0, 3).map((asset) => asset.uri);
+      
+      setImages([...images, ...novasImagens]); 
     }
-  };
-
- const uploadImage = async (uri: any) => { // upload image para adquiri as urls da 
-   try {
-     const response = await fetch(uri);
-     const blob = await response.blob();
-     const imageRef = ref(storage, `images/${Date.now()}`);
-     await uploadBytes(imageRef, blob);
-     const url = await getDownloadURL(imageRef);
-     console.log("Imagem carregada com sucesso. URL:", url);
-     return url;
-   } catch (error) {
-     console.error("Erro ao fazer o upload da imagem:", error);
-     throw new Error("Falha no upload da imagem");
-   }
- };
-
-
-  const uploadImages = async () => {
-    const urls = [];
-    for (const uri of images) {
-      const url = await uploadImage(uri);
-      urls.push(url);
-    }
-    return urls;
   };
 
   const submitIndication = async () => {
@@ -88,6 +61,7 @@ const IndicationForm = () => {
     }
 
   try {
+    const userId = await AsyncStorage.getItem('userId');
     console.log("Iniciando o upload das imagens...");
     const imageUrls = await uploadImages();
     console.log("Imagens enviadas com sucesso. URLs obtidas:", imageUrls);
@@ -103,14 +77,17 @@ const IndicationForm = () => {
       createdAt: new Date(),
     });
     console.log("Enviando dados para o Firestore...");
-    const docRef = await addDoc(collection(db, "indications"), { // adicionar coleção ao firestore collection
+    const docRef = await addDoc(collection(db, "indications"), { 
       location: {
         latitude: location.latitude,
         longitude: location.longitude, 
       },
       phoneManager: phoneManager,
       phoneOwner: phoneOwner,
+      nameOwner: nameOwner,
       imageUrls: imageUrls,
+      userId: userId,
+      statusObra: "pendente",
       createdAt: new Date(),
     });
 
@@ -170,12 +147,19 @@ const IndicationForm = () => {
           </View>
         </Pressable>
 
+        <TextInput 
+        style={styles.input}
+        placeholder="Nome do Dono da Obra"
+        value={nameOwner}
+        onChangeText={(text) => setNameOwner(text)}
+        />    
+
         <TextInput
           style={styles.input}
           placeholder="Telefone do Dono da Obra"
           keyboardType="phone-pad"
           value={phoneOwner}
-          onChangeText={setPhoneOwner}
+          onChangeText={(phone) => setPhoneOwner(phone)}
           returnKeyType="done"
           placeholderTextColor="#AAA"
         />
@@ -184,7 +168,7 @@ const IndicationForm = () => {
           placeholder="Telefone do Resp. Técnico"
           keyboardType="phone-pad"
           value={phoneManager}
-          onChangeText={setPhoneManager}
+          onChangeText={(phone) => setPhoneManager(phone)}
           returnKeyType="done"
           placeholderTextColor="#AAA"
         />

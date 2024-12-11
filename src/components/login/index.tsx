@@ -4,7 +4,7 @@ import { View, Text, TextInput, TouchableOpacity, Keyboard, ImageBackground, Ima
 import { LinearGradient } from "expo-linear-gradient";
 import { db } from "../../../firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function LoginComponent() {
   const navigation = useNavigation();
@@ -35,6 +35,14 @@ export function LoginComponent() {
 
       if (!querySnapshot.empty) {
         Alert.alert("Login bem-sucedido!");
+        const armazenarUserId = async (userId:string) => { 
+          try {
+            await AsyncStorage.setItem(' userId', userId);
+            console.log('UserId armazenado com sucesso!', userId)
+          } catch(error) {
+            console.error('Erro ao armazenar useId: ', error);
+          }
+        }
        navigation.replace('Main');
       } else {
         Alert.alert(

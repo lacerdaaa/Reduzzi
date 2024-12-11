@@ -2,7 +2,7 @@
   "expo": {
     "newArchEnabled": true,
     "name": "Reduzzi",
-    "slug": "Reduzzi",
+    "slug": "reduzzi-indicacoes",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -18,9 +18,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/adaptative-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.reduzzi.reduzziindicacoes"
     },
     "web": {
       "bundler": "metro",
@@ -34,12 +35,19 @@
       "typedRoutes": true
     },
     "extra": {
-      "API_KEY":"AIzaSyDGx6unQWp5po--LyVK13O_Z3z9td_GrjI",
+      "API_KEY": "AIzaSyDGx6unQWp5po--LyVK13O_Z3z9td_GrjI",
       "AUTH_DOMAIN": "reduzzi-indica.firebaseapp.com",
       "PROJECT_ID": "reduzzi-indica",
-      "STORAGE_BUCKET":"reduzzi-indica.firebasestorage.app",
+      "STORAGE_BUCKET": "reduzzi-indica.firebasestorage.app",
       "MESSAGING_SENDER_ID": "967475509071",
-      "APP_ID":"1:967475509071:web:ecfb952f9c5c23ee87373a"
-    }
+      "APP_ID": "1:967475509071:web:ecfb952f9c5c23ee87373a",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "16f4f35a-7329-4a15-bbee-2c95326a9ca6"
+      }
+    },
+    "owner": "reduzzi"
   }
 }
