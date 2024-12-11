@@ -9,7 +9,7 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./src/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -34,12 +34,12 @@
       "typedRoutes": true
     },
     "extra": {
-      "API_KEY":"AIzaSyCNVvS3JxzHcfok0x9Y4wLFRZdPiUnN630",
-      "AUTH_DOMAIN": "reduzzi-6eb49.firebaseapp.com",
-      "PROJECT_ID": "reduzzi-6eb49",
-      "STORAGE_BUCKET":"reduzzi-6eb49.firebasestorage.app",
-      "MESSAGING_SENDER_ID": "217112197945",
-      "APP_ID":"1:217112197945:web:0f77a453364359dd6ec6e8"
+      "API_KEY":"AIzaSyDGx6unQWp5po--LyVK13O_Z3z9td_GrjI",
+      "AUTH_DOMAIN": "reduzzi-indica.firebaseapp.com",
+      "PROJECT_ID": "reduzzi-indica",
+      "STORAGE_BUCKET":"reduzzi-indica.firebasestorage.app",
+      "MESSAGING_SENDER_ID": "967475509071",
+      "APP_ID":"1:967475509071:web:ecfb952f9c5c23ee87373a"
     }
   }
 }

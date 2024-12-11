@@ -59,9 +59,7 @@ export function LoginComponent() {
 
   return (
     <ImageBackground
-      source={{
-        uri: "https://firebasestorage.googleapis.com/v0/b/reduzzi-6eb49.firebasestorage.app/o/src%2FReduzzi-app-background%20(1).jpeg?alt=media&token=261a341f-13c5-49f6-855a-16239e6dc56f",
-      }}
+      source={require('../../assets/Reduzzi-app-background.jpeg')}
       style={{ flex: 1 }}
       resizeMode="cover"
     >

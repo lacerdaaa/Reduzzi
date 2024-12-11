@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from "react"
-import { View, Text, TextInput, TouchableOpacity, Keyboard, ImageBackground, Image, Alert } from "react-native"
-import { LinearGradient } from "expo-linear-gradient"
-import RNPickerSelect from "react-native-picker-select"
-import { db } from "../../../firebaseConfig"; 
-import { collection, addDoc } from "firebase/firestore"; 
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Keyboard,
+  ImageBackground,
+  Image,
+  Alert,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import RNPickerSelect from "react-native-picker-select";
+import { db } from "../../../firebaseConfig";
+import { collection, addDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
-
 
 interface State {
   id: number;
@@ -18,22 +26,18 @@ interface City {
   nome: string;
 }
 
-
-
 export function RegisterComponent() {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const [name, setName] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [pixKey, setPixKey] = useState("");
+  const [states, setStates] = useState<State[]>([]);
+  const [selectedState, setSelectedState] = useState<string>("");
+  const [cities, setCities] = useState<City[]>([]);
+  const [selectedCity, setSelectedCity] = useState<string>("");
 
-  
-  const [name, setName] = useState("")
-  const [cpf, setCpf] = useState("")
-  const [phone, setPhone] = useState("")
-  const [email, setEmail] = useState("")
-  const [pixKey, setPixKey] = useState("")
-  const [states, setStates] = useState<State[]>([])
-  const [selectedState, setSelectedState] = useState<string>("")
-  const [cities, setCities] = useState<City[]>([])
-  const [selectedCity, setSelectedCity] = useState<string>("")
-  
   const handleRegister = async () => {
     try {
       const userData = {
@@ -50,8 +54,7 @@ export function RegisterComponent() {
       await addDoc(userCollection, userData);
 
       Alert.alert("Sucesso", "Usuário registrado com sucesso!");
-      navigation.navigate("Login")
-      //navigation
+      navigation.replace("Login");
     } catch (error) {
       console.error("Erro ao registrar usuário:", error);
       Alert.alert("Erro", "Não foi possível registrar o usuário.");
@@ -64,18 +67,18 @@ export function RegisterComponent() {
         "https://servicodados.ibge.gov.br/api/v1/localidades/estados"
       );
       if (!response.ok) {
-        throw new Error(`Erro: ${response.status} ${response.statusText}`)
+        throw new Error(`Erro: ${response.status} ${response.statusText}`);
       }
-      const data: State[] = await response.json()
+      const data: State[] = await response.json();
       const statesData = data.map((state) => ({
         id: state.id,
         sigla: state.sigla,
         nome: state.nome,
-      }))
-      setStates(statesData)
+      }));
+      setStates(statesData);
     } catch (error) {
-      console.error("Erro ao buscar estados:", error)
-      Alert.alert("Erro", "Não foi possível buscar os estados.")
+      console.error("Erro ao buscar estados:", error);
+      Alert.alert("Erro", "Não foi possível buscar os estados.");
     }
   };
 
@@ -83,19 +86,19 @@ export function RegisterComponent() {
     try {
       const response = await fetch(
         `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`
-      )
+      );
       if (!response.ok) {
-        throw new Error(`Erro: ${response.status} ${response.statusText}`)
+        throw new Error(`Erro: ${response.status} ${response.statusText}`);
       }
-      const data: City[] = await response.json()
+      const data: City[] = await response.json();
       const citiesData = data.map((city) => ({
         id: city.id,
         nome: city.nome,
       }));
-      setCities(citiesData)
+      setCities(citiesData);
     } catch (error) {
-      console.error("Erro ao buscar cidades:", error)
-      Alert.alert("Erro", "Não foi possível buscar as cidades.")
+      console.error("Erro ao buscar cidades:", error);
+      Alert.alert("Erro", "Não foi possível buscar as cidades.");
     }
   };
 
@@ -111,16 +114,13 @@ export function RegisterComponent() {
     }
   }, [selectedState]);
 
-
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
 
-
-  
   return (
     <ImageBackground
-      source={{ uri: "https://firebasestorage.googleapis.com/v0/b/reduzzi-6eb49.firebasestorage.app/o/src%2FReduzzi-app-background.jpeg?alt=media&token=f0450935-645b-4c70-a248-583b49bfedcb"}}
+      source={require("../../assets/Reduzzi-app-background.jpeg")}
       style={{ flex: 1 }}
       resizeMode="cover"
       className="w-full"
@@ -195,7 +195,6 @@ export function RegisterComponent() {
                 placeholderTextColor={"#AAA"}
               />
 
-          
               <RNPickerSelect
                 onValueChange={(itemValue) => {
                   setSelectedState(itemValue);
@@ -240,6 +239,20 @@ export function RegisterComponent() {
                   value: null,
                   color: "#AAA",
                 }}
+              />
+
+              <RNPickerSelect
+                onValueChange={(itemValue) => {
+                  setSelectedCity(itemValue);
+                  console.log("Cidade selecionada: ", itemValue);
+                }}
+                items={[
+                  { label: "Selecione uma cidade", value: "" },
+                  ...cities.map((city) => ({
+                    label: city.nome,
+                    value: city.id,
+                  })),
+                ]}
               />
 
               <RNPickerSelect
@@ -306,6 +319,5 @@ export function RegisterComponent() {
         </View>
       </View>
     </ImageBackground>
-
   );
 }
