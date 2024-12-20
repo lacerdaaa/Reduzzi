@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.reduzzi.reduzziindicacoes'
+    namespace 'com.anonymous.reduzzi'
     defaultConfig {
-        applicationId 'com.reduzzi.reduzziindicacoes'
+        applicationId 'com.anonymous.reduzzi'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

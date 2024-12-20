@@ -14,6 +14,7 @@ import RNPickerSelect from "react-native-picker-select";
 import { db } from "../../../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
+import { pickerSelectStyles, s } from "./style";
 
 interface State {
   id: number;
@@ -27,7 +28,7 @@ interface City {
 }
 
 export function RegisterComponent() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [phone, setPhone] = useState("");
@@ -48,6 +49,7 @@ export function RegisterComponent() {
         pixKey,
         selectedState,
         selectedCity,
+        tipo: "indicador",
       };
 
       const userCollection = collection(db, "users");
@@ -121,7 +123,7 @@ export function RegisterComponent() {
   return (
     <ImageBackground
       source={require("../../assets/Reduzzi-app-background.jpeg")}
-      style={{ flex: 1 }}
+      style={s.imageBackground}
       resizeMode="cover"
       className="w-full"
     >
@@ -133,9 +135,9 @@ export function RegisterComponent() {
               "rgba(255,255,255,0.4)",
               "rgba(255,255,255,0.7)",
             ]}
-            style={{ flex: 1, justifyContent: "center", padding: 16 }}
+            style={s.gradient}
           >
-            <View style={{ alignItems: "center", marginTop: 20 }}></View>
+            {/* <View style={{ alignItems: "center", marginTop: 20 }}></View> */}
             <View className="flex-1 justify-center items-center">
               <Text className="text-4xl font-bold mb-4">Crie sua conta</Text>
               <Text className="text-gray-500 mb-6">
@@ -207,52 +209,13 @@ export function RegisterComponent() {
                     value: state.sigla,
                   })),
                 ]}
-                style={{
-                  inputIOS: {
-                    color: "black",
-                    padding: 12,
-                    paddingRight: 30,
-                    borderRadius: 5,
-                    height: 50,
-                    backgroundColor: "white",
-                    marginBottom: 12,
-                  },
-                  inputAndroid: {
-                    color: "black",
-                    padding: 12,
-                    paddingRight: 30,
-                    borderWidth: 1,
-                    borderColor: "gray",
-                    borderRadius: 5,
-                    height: 50,
-                    backgroundColor: "white",
-                    marginBottom: 12,
-                  },
-                  iconContainer: {
-                    top: 10,
-                    right: 12,
-                  },
-                }}
+                style={pickerSelectStyles}
                 useNativeAndroidPickerStyle={false}
                 placeholder={{
                   label: "Selecione um estado",
                   value: null,
                   color: "#AAA",
                 }}
-              />
-
-              <RNPickerSelect
-                onValueChange={(itemValue) => {
-                  setSelectedCity(itemValue);
-                  console.log("Cidade selecionada: ", itemValue);
-                }}
-                items={[
-                  { label: "Selecione uma cidade", value: "" },
-                  ...cities.map((city) => ({
-                    label: city.nome,
-                    value: city.id,
-                  })),
-                ]}
               />
 
               <RNPickerSelect
@@ -267,30 +230,7 @@ export function RegisterComponent() {
                     value: city.nome,
                   })),
                 ]}
-                style={{
-                  inputIOS: {
-                    color: "black",
-                    padding: 12,
-                    paddingRight: 30,
-                    borderRadius: 5,
-                    height: 50,
-                    backgroundColor: "white",
-                    marginBottom: 12,
-                  },
-                  inputAndroid: {
-                    color: "black",
-                    padding: 12,
-                    paddingRight: 30,
-                    borderRadius: 5,
-                    height: 50,
-                    backgroundColor: "white",
-                    marginBottom: 12,
-                  },
-                  iconContainer: {
-                    top: 10,
-                    right: 12,
-                  },
-                }}
+                style={pickerSelectStyles}
                 useNativeAndroidPickerStyle={false}
                 placeholder={{
                   label: "Selecione uma cidade",
@@ -301,18 +241,10 @@ export function RegisterComponent() {
               />
 
               <TouchableOpacity
-                style={{
-                  backgroundColor: "#3B82F6",
-                  borderRadius: 8,
-                  width: "100%",
-                  padding: 16,
-                  alignItems: "center",
-                  marginTop: 5,
-                  marginBottom: 10,
-                }}
+                style={s.registerButton}
                 onPress={handleRegister}
               >
-                <Text className="text-white text-lg font-bold">Cadastrar</Text>
+                <Text style={s.registerButtonText}>Cadastrar</Text>
               </TouchableOpacity>
             </View>
           </LinearGradient>

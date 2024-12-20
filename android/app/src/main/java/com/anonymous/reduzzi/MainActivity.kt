@@ -1,4 +1,4 @@
-package com.reduzzi.reduzziindicacoes
+package com.anonymous.reduzzi
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

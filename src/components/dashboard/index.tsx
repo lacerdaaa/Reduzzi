@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '@/firebaseConfig';
+import { db } from '../../../firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { s } from './style';
 
 const Dashboard = () => {
   const [obrasAprovadas, setObrasAprovadas] = useState(0);
@@ -36,7 +37,7 @@ const Dashboard = () => {
                 break;
             }
           });
-
+          //TODO: MUDAR OS STATUS DO SWITCH
           setObrasAprovadas(aprovadas);
           setObrasEmAnalise(emAnalise);
           setObrasNegadas(negadas);
@@ -50,52 +51,22 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.box, styles.aprovadas]}>
-        <Text style={styles.numero}>{obrasAprovadas}</Text>
-        <Text style={styles.label}>Obras Aprovadas</Text>
+    <View style={s.container}>
+      <View style={[s.box, s.aprovadas]}>
+        <Text style={s.numero}>{obrasAprovadas}</Text>
+        <Text style={s.label}>Obras Aprovadas</Text>
       </View>
-      <View style={[styles.box, styles.analise]}>
-        <Text style={styles.numero}>{obrasEmAnalise}</Text>
-        <Text style={styles.label}>Obras em Análise</Text>
+      <View style={[s.box, s.analise]}>
+        <Text style={s.numero}>{obrasEmAnalise}</Text>
+        <Text style={s.label}>Obras em Análise</Text>
       </View>
-      <View style={[styles.box, styles.negadas]}>
-        <Text style={styles.numero}>{obrasNegadas}</Text>
-        <Text style={styles.label}>Obras Negadas</Text>
+      <View style={[s.box, s.negadas]}>
+        <Text style={s.numero}>{obrasNegadas}</Text>
+        <Text style={s.label}>Obras Negadas</Text>
       </View>
-    </View>
+    </View> //TODO: adicionar status de obra // till 20/12
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 20,
-  },
-  box: {
-    alignItems: 'center',
-    padding: 20,
-    borderRadius: 10,
-    width: '30%',
-  },
-  aprovadas: {
-    backgroundColor: 'green',
-  },
-  analise: {
-    backgroundColor: 'yellow',
-  },
-  negadas: {
-    backgroundColor: 'red',
-  },
-  numero: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  label: {
-    fontSize: 16,
-  },
-});
 
 export default Dashboard;

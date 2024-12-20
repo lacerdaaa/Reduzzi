@@ -4,6 +4,8 @@ import TabRoutes from './tab.routes'
 import Register  from "../app/pages/auth/register";
 import Login  from '../app/pages/auth/login';
 import Indication from '../app/pages/indication/indicate';
+import Comercial from '@/app/comercial';
+import Financeiro from '@/app/financeiro';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +32,13 @@ export default function StackRoutes() {
           component={Indication}
           options={{ headerShown: false }}
         />
+        <Stack.Screen 
+        name='Comercial'
+        component={Comercial}
+        options={{ headerShown: false }}/>
+        <Stack.Screen 
+        name='Financeiro'
+        component={Financeiro}/>
       </Stack.Navigator>
     );
 }

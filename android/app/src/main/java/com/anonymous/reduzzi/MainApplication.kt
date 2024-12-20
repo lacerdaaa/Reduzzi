@@ -1,4 +1,4 @@
-package com.reduzzi.reduzziindicacoes
+package com.anonymous.reduzzi
 
 import android.app.Application
 import android.content.res.Configuration

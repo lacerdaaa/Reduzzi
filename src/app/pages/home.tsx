@@ -1,23 +1,13 @@
-import { ButtonIndicate } from '@/src/components/home-button1';
+import { IndicateButton } from '@/components/home-button';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
+
 
 export default function Home() {
 
-  const styles = StyleSheet.create({
-    home: {
-      backgroundColor: '#232323',
-      height: '100%',
-      width: '100%',
-      
-    }
-  });
-
   return (
-    <SafeAreaView >
-      <View style={styles.home}>
-        <Text className='text-3xl font-bold'> </Text>
-        <ButtonIndicate />
-      </View>
+    <SafeAreaView style={{flex:1}} >
+      <IndicateButton buttonText='Indicar Obra' backgroundImage={require("@/assets/indicate-button-background.png")} navigateTo='Indicate'/>
+      <IndicateButton buttonText='Indicar' backgroundImage={require("@/assets/indicate-button-background.png")} navigateTo='Indicate'/>
     </SafeAreaView>
   );
 }

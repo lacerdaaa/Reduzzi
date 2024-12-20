@@ -16,8 +16,9 @@ const IndicationForm = () => {
   const [nameOwner, setNameOwner] = useState<string>("")
   const [phoneManager, setPhoneManager] = useState<string>("");
   const [images, setImages] = useState<string[]>([]);
-  const [location, setLocation] =
-    useState<Location.LocationObjectCoords | null>(null);
+  const [location, setLocation] = useState<Location.LocationObjectCoords | null>(null);
+  const [comercial, setComercial] = useState<{ statusDono: string; statusRespTecnico: string } | null>(null);
+  const [financial, setFinancial] = useState<{ statusPagamento: string } | null>(null);
 
   const getLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -51,6 +52,18 @@ const IndicationForm = () => {
     }
   };
 
+  const uploadImages = async () => {
+    const imageUrls = await Promise.all(
+      images.map(async (image) => {
+        const imageRef = ref(storage, `images/${Date.now()}`);
+        const blob = await fetch(image).then((response) => response.blob());
+        await uploadBytes(imageRef, blob);
+        return await getDownloadURL(imageRef);
+      })
+    );
+    return imageUrls;
+  }
+
   const submitIndication = async () => {
     if ((!phoneManager && !phoneOwner) || images.length < 3 || !location) {
       Alert.alert(
@@ -62,21 +75,9 @@ const IndicationForm = () => {
 
   try {
     const userId = await AsyncStorage.getItem('userId');
-    console.log("Iniciando o upload das imagens...");
+    
     const imageUrls = await uploadImages();
-    console.log("Imagens enviadas com sucesso. URLs obtidas:", imageUrls);
-
-    console.log("Dados a serem enviados para o Firestore:", {
-      location: {
-        latitude: location.latitude,
-        longitude: location.longitude, 
-      },
-      phoneManager: phoneManager,
-      phoneOwner: phoneOwner,
-      imageUrls: imageUrls,
-      createdAt: new Date(),
-    });
-    console.log("Enviando dados para o Firestore...");
+   
     const docRef = await addDoc(collection(db, "indications"), { 
       location: {
         latitude: location.latitude,
@@ -89,12 +90,10 @@ const IndicationForm = () => {
       userId: userId,
       statusObra: "pendente",
       createdAt: new Date(),
+      status: { dono: false, tecnico: "" },
+
     });
 
-    console.log(
-      "Dados enviados com sucesso! Documento criado com ID:",
-      docRef.id
-    );
     Alert.alert("Sucesso", "Indicação enviada com sucesso!");
 
 
@@ -110,9 +109,7 @@ const IndicationForm = () => {
 
   return (
     <ImageBackground
-      source={{
-        uri: "https://firebasestorage.googleapis.com/v0/b/reduzzi-6eb49.firebasestorage.app/o/src%2Findicate-background.png?alt=media&token=1b6c63d4-58db-4904-8f0d-7aa856b981cd",
-      }}
+      source={require("../../assets/indicate-background.png")}
       style={styles.background}
       resizeMode="cover"
     >

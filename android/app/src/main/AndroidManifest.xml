@@ -29,6 +29,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="myapp"/>
         <data android:scheme="com.reduzzi.reduzziindicacoes"/>
+        <data android:scheme="com.anonymous.reduzzi"/>
       </intent-filter>
     </activity>
   </application>
