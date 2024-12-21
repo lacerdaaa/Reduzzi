@@ -45,13 +45,15 @@ const IndicationForm = () => {
     }
 
     const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: [],
+      mediaTypes: ['images'],
+      allowsEditing: true,
       quality: 1,
     });
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
       const newImageUri = result.assets[0].uri;
       setImages([...images, newImageUri]);
+      console.log("Imagem capturada:", newImageUri);
     }
   };
 
