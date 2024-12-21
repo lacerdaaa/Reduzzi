@@ -53,11 +53,11 @@ export function LoginComponent() {
         console.log("UserId: ", userId);
         if (rememberMe) {
           await AsyncStorage.setItem("rememberMe", JSON.stringify(true));
-          await AsyncStorage.setItem("userId", userId);
         } else {
           await AsyncStorage.removeItem("rememberMe");
           await AsyncStorage.removeItem("userId");
         }
+        await AsyncStorage.setItem("userId", userId);
         console.log("User:", user);
         if (user.tipo === "indicador") {
           navigation.replace("Main");

@@ -27,7 +27,7 @@ export default function TabRoutes() {
                 }}
             />
             <Tab.Screen
-                name="Indicações"
+                name="AcompanharIndicacao"
                 component={TrackIndication}  
                 options={{
                     tabBarIcon: () => <FontAwesome name='bookmark'/>

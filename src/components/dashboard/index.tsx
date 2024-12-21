@@ -37,7 +37,7 @@ const Dashboard = () => {
                 break;
             }
           });
-          //TODO: MUDAR OS STATUS DO SWITCH
+          
           setObrasAprovadas(aprovadas);
           setObrasEmAnalise(emAnalise);
           setObrasNegadas(negadas);

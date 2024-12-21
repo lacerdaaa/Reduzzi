@@ -4,7 +4,7 @@ import {
   Text,
   ImageBackground,
   TouchableOpacityProps,
-  View
+  View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { s } from "./style";
@@ -27,22 +27,26 @@ export function IndicateButton({
     navigation.navigate(navigateTo);
   };
 
+  const words = buttonText.split(" ");
+
   return (
     <TouchableOpacity
       style={s.button}
       onPress={handleNavigation}
       activeOpacity={0.7}
       {...rest}
-    > 
+    >
       <ImageBackground source={backgroundImage} style={s.buttonImageBackground}>
-        <View>
-        <Text onPress={handleNavigation} style={s.buttonText}>
-          {buttonText}
-        </Text>
-        <Text onPress={handleNavigation} style={s.buttonText}>
-          CONFIRA  
-        </Text>
+        <View style={s.buttonContent}>
+          {words.map((word, index) => (
+            <Text key={index} onPress={handleNavigation} style={s.buttonText}>
+              {word}
+            </Text>
+          ))}
         </View>
+          <Text onPress={handleNavigation} style={s.buttonTextSecondary}>
+            Confira &gt;
+          </Text>
       </ImageBackground>
     </TouchableOpacity>
   );
