@@ -1,6 +1,13 @@
 import IndicationForm from '@/components/indicate/index';
-import { View } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 
 export default function Indication() {
-  return <IndicationForm />;
+  return (
+    <ImageBackground
+      source={require('@/assets/indicate-background.png')}
+      style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+    >
+      <IndicationForm />
+    </ImageBackground>
+  )
 }
