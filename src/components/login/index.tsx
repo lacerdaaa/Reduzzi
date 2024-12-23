@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { Loading } from "@/components/loaded/index";
 import { LinearGradient } from "expo-linear-gradient";
-import { db } from "../../../firebaseConfig";
+import { db } from "./../../../firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { s, gradientColors } from "./style";
