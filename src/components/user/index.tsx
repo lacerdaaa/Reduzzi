@@ -35,7 +35,7 @@ export default function User() {
   return (
     <View style={s.container}>
       <View style={s.subContainer}>
-        <Image source={require("")} />
+        <Image source={require("@/assets/user.png")} />
         <View>
           <Text>Olá,</Text>
           <Text>{user}</Text>

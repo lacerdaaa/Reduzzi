@@ -23,6 +23,9 @@ export const s = StyleSheet.create({
         color: "white",
         fontSize: 16,
         fontFamily: fontFamily.bold,
+    },
+    input: {
+      minWidth: '80%',
     }
 })
 
@@ -40,12 +43,11 @@ export const pickerSelectStyles = StyleSheet.create({
       color: "black",
       padding: 12,
       paddingRight: 30,
-      borderWidth: 1,
-      borderColor: "gray",
       borderRadius: 5,
       height: 50,
       backgroundColor: "white",
       marginBottom: 12,
+      minWidth: '80%'
     },
     iconContainer: {
       top: 10,

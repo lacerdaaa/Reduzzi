@@ -128,7 +128,7 @@ export function RegisterComponent() {
       className="w-full"
     >
       <View className="flex-1 justify-center items-center px-6">
-        <View className="rounded-2xl overflow-hidden border border-white h-4/6">
+        <View className="rounded-2xl overflow-hidden border border-white h-4/5 ">
           <LinearGradient
             colors={[
               "rgba(255,255,255,0.7)",
@@ -147,6 +147,7 @@ export function RegisterComponent() {
               <TextInput
                 className="bg-white rounded-lg w-80 p-4 mb-4"
                 placeholder="Digite seu nome"
+                style={s.input}
                 value={name}
                 onChangeText={setName}
                 returnKeyType="done"
@@ -158,6 +159,7 @@ export function RegisterComponent() {
                 className="bg-white rounded-lg w-80 p-4 mb-4"
                 placeholder="Digite seu CPF"
                 keyboardType="numeric"
+                style={s.input}
                 value={cpf}
                 onChangeText={setCpf}
                 returnKeyType="done"
@@ -170,6 +172,7 @@ export function RegisterComponent() {
                 placeholder="Digite seu telefone"
                 keyboardType="phone-pad"
                 value={phone}
+                style={s.input}
                 onChangeText={setPhone}
                 returnKeyType="done"
                 onSubmitEditing={dismissKeyboard}
@@ -180,6 +183,7 @@ export function RegisterComponent() {
                 className="bg-white rounded-lg w-80 p-4 mb-4"
                 placeholder="Digite seu email"
                 keyboardType="email-address"
+                style={s.input}
                 value={email}
                 onChangeText={setEmail}
                 returnKeyType="done"
@@ -193,6 +197,7 @@ export function RegisterComponent() {
                 value={pixKey}
                 onChangeText={setPixKey}
                 returnKeyType="done"
+                style={s.input}
                 onSubmitEditing={dismissKeyboard}
                 placeholderTextColor={"#AAA"}
               />
