@@ -6,15 +6,17 @@ import {
   TouchableOpacity,
   Keyboard,
   ImageBackground,
-  Image,
   Alert,
+  StyleSheet,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import RNPickerSelect from "react-native-picker-select";
 import { db } from "../../../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
-import { pickerSelectStyles, s } from "./style";
+import { colors, fontFamily } from "@/styles/theme";
+
 
 interface State {
   id: number;
@@ -121,140 +123,224 @@ export function RegisterComponent() {
   };
 
   return (
-    <ImageBackground
-      source={require("../../assets/Reduzzi-app-background.jpeg")}
-      style={s.imageBackground}
-      resizeMode="cover"
-      className="w-full"
-    >
-      <View className="flex-1 justify-center items-center px-6">
-        <View className="rounded-2xl overflow-hidden border border-white h-4/5 ">
-          <LinearGradient
-            colors={[
-              "rgba(255,255,255,0.7)",
-              "rgba(255,255,255,0.4)",
-              "rgba(255,255,255,0.7)",
-            ]}
-            style={s.gradient}
-          >
-            {/* <View style={{ alignItems: "center", marginTop: 20 }}></View> */}
-            <View className="flex-1 justify-center items-center">
-              <Text className="text-4xl font-bold mb-4">Crie sua conta</Text>
-              <Text className="text-gray-500 mb-6">
-                Preencha os dados para se registrar
-              </Text>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <ImageBackground
+        source={require("../../assets/ReduzziLoginBackground.png")}
+        style={styles.background}
+        resizeMode="cover"
+      >
+        <View style={styles.container}>
+          <View style={styles.card}>
+            <LinearGradient
+              colors={[
+                "rgba(255,255,255,0.7)",
+                "rgba(255,255,255,0.4)",
+                "rgba(255,255,255,0.7)",
+              ]}
+              style={styles.gradient}
+            >
+              <View style={styles.content}>
+                <Text style={styles.title}>Crie sua conta</Text>
+                <Text style={styles.subtitle}>
+                  Preencha os dados para se registrar
+                </Text>
 
-              <TextInput
-                className="bg-white rounded-lg w-80 p-4 mb-4"
-                placeholder="Digite seu nome"
-                style={s.input}
-                value={name}
-                onChangeText={setName}
-                returnKeyType="done"
-                onSubmitEditing={dismissKeyboard}
-                placeholderTextColor={"#AAA"}
-              />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite seu nome"
+                  value={name}
+                  onChangeText={setName}
+                  returnKeyType="done"
+                  onSubmitEditing={dismissKeyboard}
+                  placeholderTextColor={"#AAA"}
+                />
 
-              <TextInput
-                className="bg-white rounded-lg w-80 p-4 mb-4"
-                placeholder="Digite seu CPF"
-                keyboardType="numeric"
-                style={s.input}
-                value={cpf}
-                onChangeText={setCpf}
-                returnKeyType="done"
-                onSubmitEditing={dismissKeyboard}
-                placeholderTextColor={"#AAA"}
-              />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite seu CPF"
+                  keyboardType="numeric"
+                  value={cpf}
+                  onChangeText={setCpf}
+                  returnKeyType="done"
+                  onSubmitEditing={dismissKeyboard}
+                  placeholderTextColor={"#AAA"}
+                />
 
-              <TextInput
-                className="bg-white rounded-lg w-80 p-4 mb-4"
-                placeholder="Digite seu telefone"
-                keyboardType="phone-pad"
-                value={phone}
-                style={s.input}
-                onChangeText={setPhone}
-                returnKeyType="done"
-                onSubmitEditing={dismissKeyboard}
-                placeholderTextColor={"#AAA"}
-              />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite seu telefone"
+                  keyboardType="phone-pad"
+                  value={phone}
+                  onChangeText={setPhone}
+                  returnKeyType="done"
+                  onSubmitEditing={dismissKeyboard}
+                  placeholderTextColor={"#AAA"}
+                />
 
-              <TextInput
-                className="bg-white rounded-lg w-80 p-4 mb-4"
-                placeholder="Digite seu email"
-                keyboardType="email-address"
-                style={s.input}
-                value={email}
-                onChangeText={setEmail}
-                returnKeyType="done"
-                onSubmitEditing={dismissKeyboard}
-                placeholderTextColor={"#AAA"}
-              />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite seu email"
+                  keyboardType="email-address"
+                  value={email}
+                  onChangeText={setEmail}
+                  returnKeyType="done"
+                  onSubmitEditing={dismissKeyboard}
+                  placeholderTextColor={"#AAA"}
+                />
 
-              <TextInput
-                className="bg-white rounded-lg w-80 p-4 mb-4"
-                placeholder="Digite sua chave PIX"
-                value={pixKey}
-                onChangeText={setPixKey}
-                returnKeyType="done"
-                style={s.input}
-                onSubmitEditing={dismissKeyboard}
-                placeholderTextColor={"#AAA"}
-              />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite sua chave PIX"
+                  value={pixKey}
+                  onChangeText={setPixKey}
+                  returnKeyType="done"
+                  onSubmitEditing={dismissKeyboard}
+                  placeholderTextColor={"#AAA"}
+                />
 
-              <RNPickerSelect
-                onValueChange={(itemValue) => {
-                  setSelectedState(itemValue);
-                  console.log("Estado selecionado:", itemValue);
-                }}
-                items={[
-                  { label: "Selecione um estado", value: "" },
-                  ...states.map((state) => ({
-                    label: state.nome,
-                    value: state.sigla,
-                  })),
-                ]}
-                style={pickerSelectStyles}
-                useNativeAndroidPickerStyle={false}
-                placeholder={{
-                  label: "Selecione um estado",
-                  value: null,
-                  color: "#AAA",
-                }}
-              />
+                <RNPickerSelect
+                  onValueChange={(itemValue) => {
+                    setSelectedState(itemValue);
+                    console.log("Estado selecionado:", itemValue);
+                  }}
+                  items={[
+                    { label: "Selecione um estado", value: "" },
+                    ...states.map((state) => ({
+                      label: state.nome,
+                      value: state.sigla,
+                    })),
+                  ]}
+                  style={pickerSelectStyles}
+                  useNativeAndroidPickerStyle={false}
+                  placeholder={{
+                    label: "Selecione um estado",
+                    value: null,
+                    color: "#AAA",
+                  }}
+                />
 
-              <RNPickerSelect
-                onValueChange={(itemValue) => {
-                  setSelectedCity(itemValue);
-                  console.log("Cidade selecionada:", itemValue);
-                }}
-                items={[
-                  { label: "Selecione uma cidade", value: "" },
-                  ...cities.map((city) => ({
-                    label: city.nome,
-                    value: city.nome,
-                  })),
-                ]}
-                style={pickerSelectStyles}
-                useNativeAndroidPickerStyle={false}
-                placeholder={{
-                  label: "Selecione uma cidade",
-                  value: null,
-                  color: "#AAA",
-                }}
-                disabled={cities.length === 0}
-              />
+                <RNPickerSelect
+                  onValueChange={(itemValue) => {
+                    setSelectedCity(itemValue);
+                    console.log("Cidade selecionada:", itemValue);
+                  }}
+                  items={[
+                    { label: "Selecione uma cidade", value: "" },
+                    ...cities.map((city) => ({
+                      label: city.nome,
+                      value: city.nome,
+                    })),
+                  ]}
+                  style={pickerSelectStyles}
+                  useNativeAndroidPickerStyle={false}
+                  placeholder={{
+                    label: "Selecione uma cidade",
+                    value: null,
+                    color: "#AAA",
+                  }}
+                  disabled={cities.length === 0}
+                />
 
-              <TouchableOpacity
-                style={s.registerButton}
-                onPress={handleRegister}
-              >
-                <Text style={s.registerButtonText}>Cadastrar</Text>
-              </TouchableOpacity>
-            </View>
-          </LinearGradient>
+                <TouchableOpacity
+                  style={styles.registerButton}
+                  onPress={handleRegister}
+                >
+                  <Text style={styles.registerButtonText}>Cadastrar</Text>
+                </TouchableOpacity>
+              </View>
+            </LinearGradient>
+          </View>
         </View>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 }
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    zIndex: -1,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 24,
+  },
+  card: {
+    borderRadius: 20,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "white",
+    height: "80%",
+    width: "100%",
+  },
+  gradient: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  content: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 30,
+    fontFamily: fontFamily.bold,
+    color: "black",
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "gray",
+    marginBottom: 24,
+  },
+  input: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    minWidth: "100%",
+    padding: 16,
+    marginBottom: 16,
+  },
+  registerButton: {
+    backgroundColor: colors.blue.primary,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    minWidth: "100%",
+    height: 50,
+  },
+  registerButtonText: {
+    color: "white",
+    fontSize: 24,
+    textAlign: "center",
+    fontFamily: fontFamily.bold,
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    color: "black",
+    paddingRight: 30,
+    marginBottom: 16,
+    backgroundColor: "white",
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: "purple",
+    borderRadius: 8,
+    color: "black",
+    paddingRight: 30,
+    marginBottom: 16,
+    backgroundColor: "white",
+  },
+});

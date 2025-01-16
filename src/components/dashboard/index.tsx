@@ -64,7 +64,7 @@ const Dashboard = () => {
         <Text style={s.numero}>{obrasNegadas}</Text>
         <Text style={s.label}>Obras Negadas</Text>
       </View>
-    </View> //TODO: adicionar status de obra // till 20/12
+    </View> 
   );
 };
 

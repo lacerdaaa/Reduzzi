@@ -9,13 +9,16 @@ import {
   ImageBackground,
   Image,
   Alert,
+  StyleSheet,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { Loading } from "@/components/loaded/index";
 import { LinearGradient } from "expo-linear-gradient";
 import { db } from "./../../../firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { s, gradientColors } from "./style";
+import { gradientColors } from "./style";
+import { colors, fontFamily } from "@/styles/theme";
 
 export function LoginComponent() {
   const navigation = useNavigation<any>();
@@ -91,84 +94,189 @@ export function LoginComponent() {
   };
 
   return (
-    <ImageBackground
-      source={require("../../assets/Reduzzi-app-background.jpeg")}
-      style={{ flex: 1 }}
-      resizeMode="cover"
-    >
-      <View className="flex-1 justify-center items-center px-6">
-        <View className="rounded-2xl overflow-hidden border border-white h-3/5">
-          <LinearGradient
-            colors={gradientColors as [string, string]}
-            style={s.gradient}
-          >
-            <View style={s.logoContainer}>
-              <Image
-                source={require("../../assets/Reduzzi-logo-azul.png")}
-                style={s.logo}
-                resizeMode="contain"
-              />
-            </View>
-            <View style={s.inputs}>
-              <Text style={s.title}>Bem vindo(a)</Text>
-              <Text className="text-gray-500 mb-6">
-                Insira seus dados e acesse a plataforma
-              </Text>
-
-              <TextInput
-                className="bg-white rounded-lg w-80 p-4 mb-4"
-                placeholder="Digite seu CPF"
-                keyboardType="numeric"
-                value={cpf}
-                onChangeText={setCpf}
-                returnKeyType="done"
-                onSubmitEditing={dismissKeyboard}
-                placeholderTextColor={"#AAA"}
-              />
-
-              <TextInput
-                className="bg-white rounded-lg w-80 p-4 mb-4"
-                placeholder="Digite seu telefone"
-                keyboardType="phone-pad"
-                value={phone}
-                onChangeText={setPhone}
-                returnKeyType="done"
-                onSubmitEditing={dismissKeyboard}
-                placeholderTextColor={"#AAA"}
-              />
-              <View className="w-full px-8 flex-row justify-between items-center mb-8">
-                <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
-                  <Text className="text-blue-500">
-                    {rememberMe ? "✔ Lembrar de mim" : "Lembrar de mim"}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text className="text-blue-500">Esqueci minha senha</Text>
-                </TouchableOpacity>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <ImageBackground
+        source={require("../../assets/ReduzziLoginBackground.png")}
+        style={styles.background}
+        resizeMode="cover"
+      >
+        <View style={styles.container}>
+          <View style={styles.card}>
+            <LinearGradient
+              colors={gradientColors as [string, string]}
+              style={styles.gradient}
+            >
+              <View style={styles.logoContainer}>
+                <Image
+                  source={require("../../assets/LogoReduzzi.png")}
+                  style={styles.logo}
+                  resizeMode="contain"
+                />
               </View>
-              <View style={{ alignItems: "center", marginBottom: 16 }}>
-                <TouchableOpacity style={s.loginButton} onPress={handleLogin}>
+              <View style={styles.inputs}>
+                <Text style={styles.title}>Bem vindo(a)</Text>
+                <Text style={styles.subtitle}>
+                  Insira seus dados e acesse a plataforma
+                </Text>
+
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite seu CPF"
+                  keyboardType="numeric"
+                  value={cpf}
+                  onChangeText={setCpf}
+                  returnKeyType="done"
+                  onSubmitEditing={dismissKeyboard}
+                  placeholderTextColor={"#AAA"}
+                />
+
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite seu telefone"
+                  keyboardType="phone-pad"
+                  value={phone}
+                  onChangeText={setPhone}
+                  returnKeyType="done"
+                  onSubmitEditing={dismissKeyboard}
+                  placeholderTextColor={"#AAA"}
+                />
+                <View style={styles.rememberMeContainer}>
+                  <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
+                    <Text style={styles.rememberMeText}>
+                      {rememberMe ? "✔ Lembrar de mim" : "Lembrar de mim"}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Text style={styles.forgotPasswordText}>
+                      Esqueci minha senha
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.loginButtonContainer}>
+                  <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
                     {loading ? (
                       <Loading />
                     ) : (
-                      <Text style={s.loginButtonText}>Entrar</Text>
+                      <Text style={styles.loginButtonText}>Entrar</Text>
                     )}
-                </TouchableOpacity>
-              </View>
-              <View className="flex-col items-center p-2">
-                <View>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.registerContainer}>
                   <TouchableOpacity onPress={handleGoToRegister}>
-                    <Text className="text-slate-600 text-lx">
-                      Não tem conta?
-                      <Text className="text-blue-500 text-lx">Criar uma</Text>
+                    <Text style={styles.registerText}>
+                      Não tem conta?{" "}
+                      <Text style={styles.registerLinkText}>Criar uma</Text>
                     </Text>
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
-          </LinearGradient>
+            </LinearGradient>
+          </View>
         </View>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 }
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    zIndex: -1,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 24,
+  },
+  card: {
+    borderRadius: 20,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "white",
+    height: "60%",
+    width: "100%",
+    
+  },
+  gradient: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logoContainer: {
+    marginBottom: 20,
+  },
+  logo: {
+    width: 200,
+    height: 100,
+  },
+  inputs: {
+    width: "100%",
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "black",
+    marginBottom: 5,
+    textAlign: "center",
+    fontFamily: fontFamily.bold,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "gray",
+    marginBottom: 24,
+    textAlign: "center",
+  },
+  input: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    width: "100%",
+    padding: 16,
+    marginBottom: 16,
+  },
+  rememberMeContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  rememberMeText: {
+    color: colors.blue.primary,
+  },
+  forgotPasswordText: {
+    color: colors.blue.primary,
+  },
+  loginButtonContainer: {
+    alignItems: "center",
+    marginBottom: 16,
+  
+  },
+  loginButton: {
+    backgroundColor: colors.blue.primary,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    width: "100%",
+    height: 50,
+  },
+  loginButtonText: {
+    color: "white",
+    fontSize: 24,
+    fontWeight: "bold",
+    alignSelf: "center",
+  },
+  registerContainer: {
+    alignItems: "center",
+    padding: 2,
+  },
+  registerText: {
+    color: "gray",
+    fontSize: 12,
+  },
+  registerLinkText: {
+    color: colors.blue.primary,
+    fontSize: 16,
+  },
+});

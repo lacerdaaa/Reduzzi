@@ -23,14 +23,17 @@ export default function TabRoutes() {
                 name="Carteira"
                 component={Wallet}  
                 options={{
-                    tabBarIcon: () => <FontAwesome name='money' />
+                    tabBarIcon: () => <FontAwesome name='money' />,
+                    headerShown: false
+
                 }}
             />
             <Tab.Screen
                 name="AcompanharIndicacao"
                 component={TrackIndication}  
                 options={{
-                    tabBarIcon: () => <FontAwesome name='bookmark'/>
+                    tabBarIcon: () => <FontAwesome name='bookmark'/>,
+                    headerShown: false
                 }}
             />
             <Tab.Screen

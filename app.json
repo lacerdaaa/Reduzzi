@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "Reduzzi",
+    "slug": "reduzzi-indicacoes",
+    "userInterfaceStyle": "automatic",
+    "scheme": "reduzzi",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "newArchEnabled": true,
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.reduzzi",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Este aplicativo precisa acessar a câmera para tirar fotos.",
+        "NSLocationWhenInUseUsageDescription": "Este aplicativo precisa acessar sua localização para fornecer serviços baseados em localização."
+      }
+    },
+    "android": {
+      "package": "com.anonymous.reduzzi",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "description": "Aplicativo para indicação de obras e gerenciamento de status.",
+    "extra": {
+      "eas": {
+        "projectId": "16f4f35a-7329-4a15-bbee-2c95326a9ca6"
+      }
+    },
+    "plugins": [
+      "expo-router"
+    ]
+  }
+}
