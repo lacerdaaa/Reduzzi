@@ -52,7 +52,8 @@
     "extra": {
       "eas": {
         "projectId": "16f4f35a-7329-4a15-bbee-2c95326a9ca6"
-      }
+      },
+      "EXPO_ROUTER_APP_ROOT": "src/app"
     },
     "plugins": [
       "expo-router"

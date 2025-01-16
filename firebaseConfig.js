@@ -3,15 +3,17 @@ import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getStorage } from "firebase/storage";
+import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID, MEASUREMENT_ID } from '@env'
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDMFSfvPid9vixJFvOLW2nX99cULWAII3k",
-  authDomain: "indicareduzzi.firebaseapp.com",
-  projectId: "indicareduzzi",
-  storageBucket: "indicareduzzi.firebasestorage.app",
-  messagingSenderId: "658481078702",
-  appId: "1:658481078702:web:f3701d91325805eb38a83f",
-  measurementId: "G-C2Q7033WQP"
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID , 
 };
 
 const app = initializeApp(firebaseConfig);

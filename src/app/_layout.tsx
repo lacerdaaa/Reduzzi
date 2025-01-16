@@ -9,7 +9,6 @@ import {
 } from "@expo-google-fonts/poppins";
 import { Loading } from "@/components/loaded";
 
-import "@/styles/global.css";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Layout() {
