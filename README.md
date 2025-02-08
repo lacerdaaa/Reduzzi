@@ -23,14 +23,7 @@ O **Reduzzi** é um aplicativo para gestão de indicação de obras em franquias
 - **Armazenamento de Imagens**: Firebase Storage
 - **Geolocalização**: API de GPS do Expo
 
-## 📅 Cronograma de Desenvolvimento
-- **Fase 1** ✅ (Concluída)
-  - Criar telas principais e fluxo de autenticação
-  - Implementar envio de indicações e upload de imagens
-- **Fase 2** 🚧 (Em progresso - entrega até 25/12)
-  - Criar sistema de franquias e admins
-  - Implementar painel administrativo e controle de aprovação
-  - Desenvolver sistema de relatórios automáticos
+
 
 ## 📩 Contato
 Caso tenha dúvidas ou sugestões, entre em contato! 😊
