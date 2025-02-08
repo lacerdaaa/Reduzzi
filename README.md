@@ -1,51 +1,37 @@
-# Welcome to your Expo app 👋
+# 📌 Reduzzi - Sistema de Indicação de Obras
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 📋 Sobre o Projeto
+O **Reduzzi** é um aplicativo para gestão de indicação de obras em franquias de redução de INSS. O objetivo é permitir que usuários registrem obras e possam receber comissões caso suas indicações sejam aprovadas. O sistema também permite o controle das franquias, gerenciamento da equipe administrativa e o envio automático de relatórios.
 
-## Get started
+## 🚀 Funcionalidades Principais
 
-1. Install dependencies
+### Para Usuários:
+- 🔑 **Autenticação via CPF e telefone** (sem senha)
+- 🏗️ **Cadastro de obras** com nome, telefone do responsável, fotos e localização GPS
+- 📊 **Acompanhamento do status da indicação**
+- 💰 **Consulta de comissões aprovadas**
 
-   ```bash
-   npm install
-   ```
+### Para Equipe Administrativa:
+- ✅ **Aprovação ou rejeição de indicações**
+- 🏢 **Gerenciamento de franquias e seus administradores**
+- 📍 **Associação automática de obras à franquia mais próxima**
+- 📧 **Geração e envio de relatórios automáticos por estado/franquia**
 
-2. Start the app
+## 🛠️ Tecnologias Utilizadas
+- **Frontend**: React Native (Expo) + NativeWind
+- **Backend**: Firebase (Auth + Firestore + Functions)
+- **Armazenamento de Imagens**: Firebase Storage
+- **Geolocalização**: API de GPS do Expo
 
-   ```bash
-    npx expo start
-   ```
+## 📅 Cronograma de Desenvolvimento
+- **Fase 1** ✅ (Concluída)
+  - Criar telas principais e fluxo de autenticação
+  - Implementar envio de indicações e upload de imagens
+- **Fase 2** 🚧 (Em progresso - entrega até 25/12)
+  - Criar sistema de franquias e admins
+  - Implementar painel administrativo e controle de aprovação
+  - Desenvolver sistema de relatórios automáticos
 
-In the output, you'll find options to open the app in a
+## 📩 Contato
+Caso tenha dúvidas ou sugestões, entre em contato! 😊
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-"# Reduzzi" 
